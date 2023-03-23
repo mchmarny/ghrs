@@ -1,0 +1,26 @@
+name: counter
+description: 'Counter action'
+author: mchmarny
+branding:
+  icon: arrow-up
+  color: gray-dark
+inputs:
+  data:
+    description: 'File path'
+    required: true
+  counter:
+    description: 'State key'
+    required: true
+  action:
+    description: 'Action to perform'
+    required: true
+  value:
+    description: 'Value for the action'
+    required: true
+outputs:
+  result:
+    description: 'The result of the action'
+
+runs:
+  using: docker
+  image: docker://ghcr.io/mchmarny/ghstore:latest

@@ -17,6 +17,10 @@ on:
         required: false
         type: string
         default: 'v1.13.1'
+    secrets:
+      access_token:
+        description: 'A token passed from the caller workflow'
+        required: true
 
 permissions:
   contents: read
@@ -63,6 +67,8 @@ jobs:
 
     - name: Checkout Code
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
+      with:
+        token: ${{ secrets.access_token }}
 
     - uses: slsa-framework/slsa-verifier/actions/installer@a43888265e1f6aae98c924538298944f2721dcf0  # v2.0.1
 
