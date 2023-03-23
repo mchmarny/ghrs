@@ -1,4 +1,4 @@
-name: calculator
+name: store-test
 
 on:
   push:
