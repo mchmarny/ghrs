@@ -24,19 +24,11 @@ jobs:
     - id: cal
       uses: mchmarny/ghstore@main
       with:
-        data: ${{ inputs.data }}
-        counter: ${{ inputs.counter }}
-        action: ${{ inputs.action }}
-        value: ${{ inputs.value }}
-
-    - name: save
-      uses: EndBug/add-and-commit@v9
-      with:
-        message: data.db
+        data: data.db
         counter: calc
-        add: add
-        value: 1
-
+        action: add
+        value: '1'
+        
     - name: save
       run: |
         git config --global user.name ${{ github.actor }}
