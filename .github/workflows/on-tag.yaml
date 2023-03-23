@@ -76,26 +76,3 @@ jobs:
     uses: ./.github/workflows/slsa.yaml
     with:
       image_digest: ${{ needs.build.outputs.digest }}
-
-  valid:
-    needs:
-    - build
-    permissions:
-      contents: read
-    uses: ./.github/workflows/calculator.yaml
-    with:
-      data: data.db
-      counter: test
-      action: add
-      value: 1
-
-  print:
-    needs:
-    - valid
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-    - name: Print Output
-      run: |
-        echo "result: ${{ needs.valid.outputs.result }}"

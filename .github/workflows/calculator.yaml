@@ -1,23 +1,19 @@
 name: calculator
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       data:
         description: 'File path'
         required: true
-        type: string
       counter:
         description: 'State key'
-        type: string
-        default: true
+        required: true
       action:
         description: 'Action to perform'
-        type: string
         required: true
       value:
         description: 'Value for the action'
-        type: number
         required: true
     outputs:
       output:
@@ -51,3 +47,8 @@ jobs:
       with:
         message: "save ${{ inputs.data }}"
         add: ${{ inputs.data }}
+
+    - name: print
+      run: |
+        set -euo pipefail
+        echo "result: ${{ steps.cal.outputs.result }}"
