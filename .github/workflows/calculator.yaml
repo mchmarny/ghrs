@@ -19,9 +19,6 @@ on:
         description: 'Value for the action'
         required: true
         default: '1'
-    outputs:
-      output:
-        value: ${{ jobs.calculate.outputs.result }}
 
 permissions:
   contents: read
@@ -31,8 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      value: ${{ steps.cal.outputs.result }}
     steps:
 
     - name: Checkout Code
