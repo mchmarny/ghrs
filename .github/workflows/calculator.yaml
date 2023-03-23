@@ -6,15 +6,19 @@ on:
       data:
         description: 'File path'
         required: true
+        default: 'data.db'
       counter:
         description: 'State key'
         required: true
+        default: 'counter'
       action:
         description: 'Action to perform'
         required: true
+        default: 'add'
       value:
         description: 'Value for the action'
         required: true
+        default: '1'
     outputs:
       output:
         value: ${{ jobs.calculate.outputs.result }}
