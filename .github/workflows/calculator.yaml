@@ -39,7 +39,7 @@ jobs:
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
 
     - id: cal
-      uses: ./
+      uses: mchmarny/ghstore@main
       with:
         data: ${{ inputs.data }}
         counter: ${{ inputs.counter }}
