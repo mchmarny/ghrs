@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: write
     env:
-      DATA_FILE: data.db
+      DATA_FILE: db/calc.db
     steps:
 
     - name: Checkout
