@@ -41,6 +41,8 @@ jobs:
           ${{ runner.os }}-go-
     - name: Checkout Code
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
+      with:
+        token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
     - name: Tidy Modules
       run: |
         make tidy
@@ -73,6 +75,8 @@ jobs:
           ${{ runner.os }}-go-
     - name: Checkout Code
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
+      with:
+        token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
     - name: Tidy Modules
       run: |
         make tidy
@@ -118,6 +122,8 @@ jobs:
           ${{ runner.os }}-go-
     - name: Checkout Code
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
+      with:
+        token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
     - name: Tidy Modules
       run: |
         make tidy
@@ -134,6 +140,8 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
+      with:
+        token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
     - name: Scan Repo
       uses: aquasecurity/trivy-action@1f0aa582c8c8f5f7639610d6d38baddfea4fdcee  # master
       with:
