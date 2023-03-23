@@ -1,0 +1,47 @@
+name: calculator
+
+on:
+  workflow_call:
+    inputs:
+      data:
+        description: 'File path'
+        required: true
+        type: string
+      counter:
+        description: 'State key'
+        type: string
+        default: true
+      action:
+        description: 'Action to perform'
+        type: string
+        required: true
+      value:
+        description: 'Value for the action'
+        type: number
+        required: true
+    outputs:
+      output:
+        result: ${{ jobs.calculate.outputs.result }}
+
+permissions:
+  contents: read
+
+jobs:
+  calculate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      result: ${{ steps.cal.outputs.result }}
+    steps:
+
+    - name: Checkout Code
+      uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
+
+    - id: cal
+      uses: ./
+      with:
+        data: ${{ inputs.data }}
+        counter: ${{ inputs.counter }}
+        action: ${{ inputs.action }}
+        value: ${{ inputs.value }}

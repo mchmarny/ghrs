@@ -82,10 +82,12 @@ jobs:
     - build
     permissions:
       contents: read
-    uses: ./.github/workflows/valid.yaml
+    uses: ./.github/workflows/calculator.yaml
     with:
-      file: ${{ needs.build.outputs.digest }}
-      required: false
+      data: data.db
+      counter: test
+      action: add
+      value: 1
 
   print:
     needs:
