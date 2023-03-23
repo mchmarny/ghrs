@@ -68,6 +68,8 @@ jobs:
     with:
       image_digest: ${{ needs.build.outputs.digest }}
       scan_severity: ${{ needs.conf.outputs.err_on_vulnerability_sev }}
+    secrets:
+      access_token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
 
   slsa:
     needs:
