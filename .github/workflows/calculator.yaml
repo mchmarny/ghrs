@@ -14,25 +14,26 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      value: ${{ steps.cal.outputs.result }}
+    env:
+      DATA_FILE: data.db
     steps:
 
-    - name: Checkout Code
+    - name: Checkout
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
 
-    - id: cal
+    - name: Calculate
+      id: cal
       uses: mchmarny/ghstore@main
       with:
-        data: data.db
+        data: ${{ env.DATA_FILE }}
         counter: calc
         action: add
         value: '1'
         
-    - name: save
+    - name: Save
       run: |
         git config --global user.name ${{ github.actor }}
         git config --global user.email ${{ github.actor }}@users.noreply.github.com
-        git add ${{ inputs.data }}
-        git commit -am "save ${{ inputs.data }}"
+        git add ${{ env.DATA_FILE }}
+        git commit -am "save ${{ env.DATA_FILE }}"
         git push origin main
