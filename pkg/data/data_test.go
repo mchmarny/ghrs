@@ -15,14 +15,6 @@ func deleteDB() {
 	os.Remove(testDir)
 }
 
-var (
-	testDate = map[string]int64{
-		"test1":    0,
-		"2test":    0,
-		"bad-data": 0,
-	}
-)
-
 func TestData(t *testing.T) {
 	deleteDB()
 	defer deleteDB()
@@ -31,20 +23,23 @@ func TestData(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, s)
 
-	err = s.SaveAll(testDate)
+	val, err := s.Get("test")
+	assert.NoError(t, err)
+	assert.Equal(t, int64(0), val)
+
+	err = s.Upsert("test", 1)
 	assert.NoError(t, err)
 
-	ids, err := s.Query("test")
+	val, err = s.Get("test")
 	assert.NoError(t, err)
-	assert.Equal(t, len(ids), 2)
+	assert.Equal(t, int64(1), val)
 
-	ok, err := s.Update("2test", 1)
+	err = s.Upsert("test", int64(2))
 	assert.NoError(t, err)
-	assert.True(t, ok)
 
-	val, err := s.Get("2test")
+	val, err = s.Get("test")
 	assert.NoError(t, err)
-	assert.Equal(t, val, int64(1))
+	assert.Equal(t, int64(2), val)
 
 	err = s.Close()
 	assert.NoError(t, err)
