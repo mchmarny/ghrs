@@ -1,33 +1,21 @@
 name: calculator
 
 on:
-  workflow_dispatch:
-    inputs:
-      data:
-        description: 'File path'
-        required: true
-        default: 'data.db'
-      counter:
-        description: 'State key'
-        required: true
-        default: 'counter'
-      action:
-        description: 'Action to perform'
-        required: true
-        default: 'add'
-      value:
-        description: 'Value for the action'
-        required: true
-        default: '1'
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
 
 jobs:
+
   calculate:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      value: ${{ steps.cal.outputs.result }}
     steps:
 
     - name: Checkout Code
@@ -44,11 +32,15 @@ jobs:
     - name: save
       uses: EndBug/add-and-commit@v9
       with:
-        add: ${{ inputs.data }}
-        message: "save ${{ inputs.data }}"
-        default_author: github_actions
+        message: data.db
+        counter: calc
+        add: add
+        value: 1
 
-    - name: print
+    - name: save
       run: |
-        set -euo pipefail
-        echo "result: ${{ steps.cal.outputs.result }}"
+        git config --global user.name ${{ github.actor }}
+        git config --global user.email ${{ github.actor }}@users.noreply.github.com
+        git add ${{ inputs.data }}
+        git commit -am "save ${{ inputs.data }}"
+        git push origin main
