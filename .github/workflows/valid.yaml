@@ -13,9 +13,7 @@ on:
         default: false
     outputs:
       output:
-        value: ${{ jobs.valid.outputs.output }}
-      processed_on:
-        value: ${{ jobs.valid.outputs.processed_on }}
+        result: ${{ jobs.valid.outputs.result }}
 
 permissions:
   contents: read
@@ -26,8 +24,7 @@ jobs:
     permissions:
       contents: read
     outputs:
-      output: ${{ steps.validation.outputs.output }}
-      processed_on: ${{ steps.validation.outputs.processed_on }}
+      result: ${{ steps.validation.outputs.result }}
     steps:
 
     - name: Checkout Code
@@ -40,7 +37,3 @@ jobs:
         counter: test
         action: add
         value: 1
-
-    - name: printout
-      run: |
-        echo "result: ${{ needs.validation.outputs.result }}"
