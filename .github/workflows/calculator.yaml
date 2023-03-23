@@ -45,3 +45,11 @@ jobs:
         counter: ${{ inputs.counter }}
         action: ${{ inputs.action }}
         value: ${{ inputs.value }}
+
+    - name: save
+      run: |
+        git config --global user.name ${{ github.actor }}}
+        git config --global user.email ${{ github.actor }}@users.noreply.github.com
+        git add ${{ inputs.data }}
+        git commit -am "save ${{ inputs.data }}"
+        git push
