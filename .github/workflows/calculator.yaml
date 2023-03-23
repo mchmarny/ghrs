@@ -21,7 +21,7 @@ on:
         required: true
     outputs:
       output:
-        result: ${{ jobs.calculate.outputs.result }}
+        value: ${{ jobs.calculate.outputs.result }}
 
 permissions:
   contents: read
@@ -32,7 +32,7 @@ jobs:
     permissions:
       contents: read
     outputs:
-      result: ${{ steps.cal.outputs.result }}
+      value: ${{ steps.cal.outputs.result }}
     steps:
 
     - name: Checkout Code
