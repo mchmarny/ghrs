@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    env:
-      DATA_FILE: data.db
     steps:
 
     - name: Checkout
@@ -25,15 +23,11 @@ jobs:
       id: cal
       uses: mchmarny/ghstore@main
       with:
-        data: ${{ env.DATA_FILE }}
+        data: data.db
         counter: calc
         action: add
         value: '1'
         
-    - name: Save
-      run: |
-        git config --global user.name ${{ github.actor }}
-        git config --global user.email ${{ github.actor }}@users.noreply.github.com
-        git add ${{ env.DATA_FILE }}
-        git commit -am "save ${{ env.DATA_FILE }}"
-        git push origin main
+    - uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a  # v4.16.0
+      with:
+        file_pattern: '*.db'
