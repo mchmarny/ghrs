@@ -42,8 +42,6 @@ jobs:
           ${{ runner.os }}-go-
     - name: Checkout Code
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
-      with:
-        token: ${{ secrets.access_token }}
     - name: Tidy Modules
       run: |
         make tidy
@@ -74,8 +72,6 @@ jobs:
           ${{ runner.os }}-go-
     - name: Checkout Code
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
-      with:
-        token: ${{ secrets.access_token }}
     - name: Tidy Modules
       run: |
         make tidy
