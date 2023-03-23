@@ -20,4 +20,4 @@ outputs:
 
 runs:
   using: docker
-  image: docker://ghcr.io/mchmarny/ghrs:latest  # pinned to digest in real use
+  image: docker://ghcr.io/mchmarny/ghstore:latest  # pinned to digest in real use

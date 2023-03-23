@@ -8,37 +8,44 @@ import (
 )
 
 const (
-	testDir = "./"
+	testDir = "test.db"
 )
 
 func deleteDB() {
-	os.Remove("./data.db")
+	os.Remove(testDir)
 }
+
+var (
+	testDate = map[string]int64{
+		"test1":    0,
+		"2test":    0,
+		"bad-data": 0,
+	}
+)
 
 func TestData(t *testing.T) {
 	deleteDB()
+	defer deleteDB()
 
-	err := Init(testDir)
+	s, err := New(testDir)
+	assert.NoError(t, err)
+	assert.NotNil(t, s)
+
+	err = s.SaveAll(testDate)
 	assert.NoError(t, err)
 
-	ids := make([]int64, 0)
-	for i := int64(1); i <= 10; i++ {
-		ids = append(ids, i)
-	}
-
-	err = SaveAll(ids)
+	ids, err := s.Query("test")
 	assert.NoError(t, err)
+	assert.Equal(t, len(ids), 2)
 
-	ids2, err := Query(0)
+	ok, err := s.Update("2test", 1)
 	assert.NoError(t, err)
-	assert.Equal(t, len(ids), len(ids2))
+	assert.True(t, ok)
 
-	val, err := Get(ids[0])
+	val, err := s.Get("2test")
 	assert.NoError(t, err)
-	assert.NotNil(t, val)
+	assert.Equal(t, val, int64(1))
 
-	err = Close()
+	err = s.Close()
 	assert.NoError(t, err)
-
-	deleteDB()
 }

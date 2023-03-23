@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS sample (
-    id INTEGER NOT NULL,
-    val TEXT NOT NULL,
-    PRIMARY KEY (id, val)
+CREATE TABLE IF NOT EXISTS counter (
+    id TEXT NOT NULL,
+    val INTEGER NOT NULL,
+    PRIMARY KEY (id)
 );

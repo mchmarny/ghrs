@@ -1,4 +1,4 @@
-# ghrs
+# ghstore
 
 WIP
 

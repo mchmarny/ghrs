@@ -58,13 +58,13 @@ build: tidy ## Builds CLI binary
 		-w -s -X main.version=$(RELEASE_VERSION) \
 		-w -s -X main.commit=$(COMMIT) \
 		-w -s -X main.date=$(CURRENT_DATE) \
-		-extldflags '-static'" -o bin/action cmd/ghrs/main.go
+		-extldflags '-static'" -o bin/action cmd/ghstore/main.go
 
 .PHONY: image
 image: tidy ## Builds Docker image
 	docker build \
 		-t ghcr.io/$(REPO):$(RELEASE_VERSION) \
-		-f cmd/ghrs/Dockerfile \
+		-f cmd/ghstore/Dockerfile \
 		.
 
 .PHONY: tag

@@ -1,29 +1,45 @@
 package data
 
 import (
-	"fmt"
-	"time"
-
 	"github.com/pkg/errors"
 )
 
-func SaveAll(ids []int64) error {
-	if db == nil {
+// Save saves the value of the given id.
+func (s *Store) Save(id string, val int64) error {
+	if s.db == nil {
 		return errors.New("database not initialized")
 	}
 
-	stmt, err := db.Prepare("INSERT INTO sample (id, val) VALUES (?, ?)")
+	stmt, err := s.db.Prepare("INSERT INTO counter (id, val) VALUES (?, ?)")
+	if err != nil {
+		return errors.Wrapf(err, "failed to prepare insert statement")
+	}
+
+	_, err = stmt.Exec(id, val)
+	if err != nil {
+		return errors.Wrapf(err, "failed to execute insert statement")
+	}
+
+	return nil
+}
+
+// SaveAll saves all the ids in the database.
+func (s *Store) SaveAll(ids map[string]int64) error {
+	if s.db == nil {
+		return errors.New("database not initialized")
+	}
+
+	stmt, err := s.db.Prepare("INSERT INTO counter (id, val) VALUES (?, ?)")
 	if err != nil {
 		return errors.Wrapf(err, "failed to prepare batch statement")
 	}
 
-	tx, err := db.Begin()
+	tx, err := s.db.Begin()
 	if err != nil {
 		return errors.Wrapf(err, "failed to begin transaction")
 	}
 
-	for _, id := range ids {
-		val := fmt.Sprintf("%d", time.Now().UTC().Unix())
+	for id, val := range ids {
 		_, err = tx.Stmt(stmt).Exec(id, val)
 		if err != nil {
 			if err = tx.Rollback(); err != nil {
