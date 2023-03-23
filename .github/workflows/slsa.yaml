@@ -17,10 +17,6 @@ on:
         required: false
         type: string
         default: 'v1.13.1'
-    secrets:
-      access_token:
-        description: 'A token passed from the caller workflow'
-        required: true
 
 permissions:
   contents: read

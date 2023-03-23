@@ -39,8 +39,6 @@ jobs:
     with:
       go_version: ${{ needs.conf.outputs.go_version }}
       scan_severity: ${{ needs.conf.outputs.err_on_vulnerability_sev }}
-    secrets:
-      access_token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
 
   build:
     needs:
@@ -52,8 +50,6 @@ jobs:
       id-token: write
       packages: write
     uses: ./.github/workflows/build.yaml
-    secrets:
-      access_token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
 
   sign:
     needs:
@@ -68,8 +64,6 @@ jobs:
     with:
       image_digest: ${{ needs.build.outputs.digest }}
       scan_severity: ${{ needs.conf.outputs.err_on_vulnerability_sev }}
-    secrets:
-      access_token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
 
   slsa:
     needs:
@@ -82,8 +76,6 @@ jobs:
     uses: ./.github/workflows/slsa.yaml
     with:
       image_digest: ${{ needs.build.outputs.digest }}
-    secrets:
-      access_token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
 
   valid:
     needs:
@@ -94,8 +86,6 @@ jobs:
     with:
       file: ${{ needs.build.outputs.digest }}
       required: false
-    secrets:
-      access_token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
 
   print:
     needs:
@@ -106,5 +96,4 @@ jobs:
     steps:
     - name: Print Output
       run: |
-        echo "output: ${{ needs.valid.outputs.output }}"
-        echo "processed_on: ${{ needs.valid.outputs.processed_on }}"
+        echo "result: ${{ needs.valid.outputs.result }}"

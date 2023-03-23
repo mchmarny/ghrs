@@ -11,10 +11,6 @@ on:
         description: 'Whether or not it is required'
         type: boolean
         default: false
-    secrets:
-      access_token:
-        description: 'A token passed from the caller workflow'
-        required: true
     outputs:
       output:
         value: ${{ jobs.valid.outputs.output }}
@@ -36,8 +32,6 @@ jobs:
 
     - name: Checkout Code
       uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f  # v3.4.0
-      with:
-        token: ${{ secrets.access_token }}
 
     - id: validation
       uses: ./

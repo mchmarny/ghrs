@@ -43,5 +43,3 @@ jobs:
     with:
       go_version: ${{ needs.conf.outputs.go_version }}
       scan_severity: ${{ needs.conf.outputs.err_on_vulnerability_sev }}
-    secrets:
-      access_token: ${{ secrets.WORKFLOW_RUNNER_KEY }}
