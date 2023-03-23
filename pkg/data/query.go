@@ -2,7 +2,6 @@ package data
 
 import (
 	"database/sql"
-	"fmt"
 
 	"github.com/pkg/errors"
 )
@@ -17,7 +16,7 @@ func (s *Store) Query(v string) ([]int64, error) {
 		return nil, errors.Wrapf(err, "failed to prepare query statement")
 	}
 
-	rows, err := stmt.Query(fmt.Sprintf("%%%s%%", v))
+	rows, err := stmt.Query(v)
 	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return nil, errors.Wrapf(err, "failed to execute select statement")
 	}

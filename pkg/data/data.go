@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"embed"
 	"os"
+	"path/filepath"
 
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
@@ -27,15 +28,12 @@ func New(path string) (*Store, error) {
 		return nil, errors.New("path not specified")
 	}
 
-	wasCreated := false
 	log.Debug().Msgf("data path: %s", path)
-
-	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
-		log.Debug().Msg("data file does not exist, creating...")
-		wasCreated = true
+	wasCreated, err := ensureParentDir(path)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to ensure parent dir for: %s", path)
 	}
 
-	var err error
 	db, err := sql.Open(dataDriver, path)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to open database: %s", path)
@@ -43,7 +41,6 @@ func New(path string) (*Store, error) {
 
 	if wasCreated {
 		log.Debug().Msg("creating schema...")
-
 		b, err := f.ReadFile("sql/ddl.sql")
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to read the schema creation file")
@@ -74,4 +71,22 @@ func (s *Store) Close() error {
 // Store is the data store.
 type Store struct {
 	db *sql.DB
+}
+
+// ensureParentDir ensures that the parent directory exists.
+func ensureParentDir(s string) (bool, error) {
+	if s == "" {
+		return false, errors.New("path not specified")
+	}
+
+	if _, err := os.Stat(s); errors.Is(err, os.ErrNotExist) {
+		d := filepath.Dir(s)
+		log.Debug().Msgf("creating dir: %s", d)
+		if err := os.MkdirAll(d, os.ModePerm); err != nil {
+			return false, errors.Wrapf(err, "failed to create path: %s", d)
+		}
+		return true, nil
+	}
+
+	return false, nil
 }
