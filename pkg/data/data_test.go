@@ -33,9 +33,8 @@ func TestData(t *testing.T) {
 	err = s.Upsert(testKey, 1)
 	assert.NoError(t, err)
 
-	ok, err := s.Update(testKey, 1)
+	err = s.Update(testKey, 1)
 	assert.NoError(t, err)
-	assert.True(t, ok)
 
 	val, err = s.Get(testKey)
 	assert.NoError(t, err)
@@ -64,9 +63,8 @@ func TestData(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, len(list)+1, len(results))
 
-	ok, err = s.Delete(testKey)
+	err = s.Delete(testKey)
 	assert.NoError(t, err)
-	assert.True(t, ok)
 
 	err = s.Close()
 	assert.NoError(t, err)

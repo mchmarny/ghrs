@@ -8,7 +8,7 @@ import (
 
 func (s *Store) Query(v string) ([]int64, error) {
 	if s.db == nil {
-		return nil, errors.New("database not initialized")
+		return nil, dbNotInitializedErr
 	}
 
 	stmt, err := s.db.Prepare("SELECT val FROM counter WHERE id LIKE ?")

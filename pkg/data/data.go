@@ -20,6 +20,8 @@ const (
 var (
 	//go:embed sql/*
 	f embed.FS
+
+	dbNotInitializedErr = errors.New("database not initialized")
 )
 
 // New initializes the database for a given name.

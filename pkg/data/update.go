@@ -5,27 +5,22 @@ import (
 )
 
 // Update updates the value of the given id.
-func (s *Store) Update(id string, val int64) (updated bool, err error) {
+func (s *Store) Update(id string, val int64) error {
 	if s.db == nil {
-		return false, errors.New("database not initialized")
+		return dbNotInitializedErr
 	}
 
 	stmt, err := s.db.Prepare("UPDATE counter SET val = ? WHERE id = ?")
 	if err != nil {
-		return false, errors.Wrapf(err, "failed to prepare update statement")
+		return errors.Wrapf(err, "failed to prepare update statement")
 	}
 
-	res, err := stmt.Exec(val, id)
+	_, err = stmt.Exec(val, id)
 	if err != nil {
-		return false, errors.Wrapf(err, "failed to execute update statement")
+		return errors.Wrapf(err, "failed to execute update statement")
 	}
 
-	affect, err := res.RowsAffected()
-	if err != nil {
-		return false, errors.Wrapf(err, "failed to get affected rows")
-	}
-
-	return affect > 0, nil
+	return nil
 }
 
 // Upsert updates the value of the given id.

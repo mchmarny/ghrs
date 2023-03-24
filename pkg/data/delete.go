@@ -5,25 +5,20 @@ import (
 )
 
 // Delete deletes the value of the given id.
-func (s *Store) Delete(id string) (deleted bool, err error) {
+func (s *Store) Delete(id string) error {
 	if s.db == nil {
-		return false, errors.New("database not initialized")
+		return dbNotInitializedErr
 	}
 
 	stmt, err := s.db.Prepare("DELETE FROM counter WHERE id = ?")
 	if err != nil {
-		return false, errors.Wrapf(err, "failed to prepare delete statement")
+		return errors.Wrapf(err, "failed to prepare delete statement")
 	}
 
-	res, err := stmt.Exec(id)
+	_, err = stmt.Exec(id)
 	if err != nil {
-		return false, errors.Wrapf(err, "failed to execute delete statement")
+		return errors.Wrapf(err, "failed to execute delete statement")
 	}
 
-	affect, err := res.RowsAffected()
-	if err != nil {
-		return false, errors.Wrapf(err, "failed to get affected rows")
-	}
-
-	return affect > 0, nil
+	return nil
 }
