@@ -19,6 +19,8 @@ jobs:
     uses: ./.github/workflows/build.yaml
 
   demo:
+    needs:
+      - build
     runs-on: ubuntu-latest
     permissions:
       contents: write
