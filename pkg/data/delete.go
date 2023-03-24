@@ -7,7 +7,7 @@ import (
 // Delete deletes the value of the given id.
 func (s *Store) Delete(id string) error {
 	if s.db == nil {
-		return dbNotInitializedErr
+		return errDBNotInitialized
 	}
 
 	stmt, err := s.db.Prepare("DELETE FROM counter WHERE id = ?")

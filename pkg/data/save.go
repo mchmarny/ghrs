@@ -7,7 +7,7 @@ import (
 // Save saves the value of the given id.
 func (s *Store) Save(id string, val int64) error {
 	if s.db == nil {
-		return dbNotInitializedErr
+		return errDBNotInitialized
 	}
 
 	stmt, err := s.db.Prepare("INSERT INTO counter (id, val) VALUES (?, ?)")
@@ -26,7 +26,7 @@ func (s *Store) Save(id string, val int64) error {
 // SaveAll saves all the ids in the database.
 func (s *Store) SaveAll(ids map[string]int64) error {
 	if s.db == nil {
-		return dbNotInitializedErr
+		return errDBNotInitialized
 	}
 
 	stmt, err := s.db.Prepare("INSERT INTO counter (id, val) VALUES (?, ?)")

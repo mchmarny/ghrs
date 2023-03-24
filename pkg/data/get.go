@@ -13,7 +13,7 @@ const (
 // Get gets the value of the given id.
 func (s *Store) Get(id string) (val int64, err error) {
 	if s.db == nil {
-		return NotSetValue, dbNotInitializedErr
+		return NotSetValue, errDBNotInitialized
 	}
 
 	stmt, err := s.db.Prepare("SELECT val FROM counter WHERE id = ?")

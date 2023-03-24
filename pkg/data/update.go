@@ -7,7 +7,7 @@ import (
 // Update updates the value of the given id.
 func (s *Store) Update(id string, val int64) error {
 	if s.db == nil {
-		return dbNotInitializedErr
+		return errDBNotInitialized
 	}
 
 	stmt, err := s.db.Prepare("UPDATE counter SET val = ? WHERE id = ?")
