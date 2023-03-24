@@ -1,6 +1,8 @@
 # ghstore
 
-WIP
+GitHub Actions demo for in repo, persistent data store using [SQLite](https://sqlite.org/index.html).
+
+
 
 ## disclaimer
 

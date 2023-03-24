@@ -1,19 +1,19 @@
 package calc
 
 const (
-	DataKey    = "data"
-	CounterKey = "counter"
-	ActionKey  = "action"
-	ValueKey   = "value"
+	StateArg     = "state"
+	KeyArg       = "key"
+	OperationArg = "operation"
+	ValueArg     = "value"
 
-	ResultKey = "result"
+	ResultArg = "value"
 )
 
 func GetArgs() map[string]string {
 	return map[string]string{
-		DataKey:    "data.db",
-		CounterKey: "counter",
-		ActionKey:  "add",
-		ValueKey:   "0",
+		StateArg:     "data.db",
+		KeyArg:       "counter",
+		OperationArg: "add",
+		ValueArg:     "0",
 	}
 }

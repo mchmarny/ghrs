@@ -5,18 +5,19 @@ branding:
   icon: arrow-up
   color: gray-dark
 inputs:
-  data:
-    description: 'File path'
+  state:
+    description: 'State file path'
     required: true
-  counter:
-    description: 'State key'
+  key:
+    description: 'State set key'
     required: true
-  action:
-    description: 'Action to perform'
+  operation:
+    description: 'Operation to perform'
     required: true
   value:
     description: 'Value for the action'
-    required: true
+    required: false
+    default: '0'
 outputs:
   result:
     description: 'The result of the action'

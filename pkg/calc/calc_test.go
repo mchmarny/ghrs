@@ -21,22 +21,22 @@ func TestCalc(t *testing.T) {
 	defer deleteDB()
 
 	input := GetArgs()
-	input[DataKey] = testDataPath
-	input[CounterKey] = "cal"
-	input[ActionKey] = "add"
-	input[ValueKey] = "1"
+	input[StateArg] = testDataPath
+	input[KeyArg] = "cal"
+	input[OperationArg] = "add"
+	input[ValueArg] = "1"
 
 	results, err := Calculate(input)
 	assert.NoError(t, err)
 	assert.NotNil(t, results)
 	assert.Equal(t, 1, len(results))
-	assert.Equal(t, "1", results[ResultKey])
+	assert.Equal(t, "1", results[ResultArg])
 
-	input[ValueKey] = "2"
+	input[ValueArg] = "2"
 
 	results, err = Calculate(input)
 	assert.NoError(t, err)
 	assert.NotNil(t, results)
 	assert.Equal(t, 1, len(results))
-	assert.Equal(t, "3", results[ResultKey])
+	assert.Equal(t, "3", results[ResultArg])
 }

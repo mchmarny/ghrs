@@ -15,31 +15,31 @@ func Calculate(m map[string]string) (map[string]string, error) {
 	}
 
 	// init data store
-	dataFile := m[DataKey]
-	s, err := data.New(dataFile)
+	stateFile := m[StateArg]
+	s, err := data.New(stateFile)
 	if err != nil {
-		return nil, errors.Wrapf(err, "error creating data store: %s", dataFile)
+		return nil, errors.Wrapf(err, "error creating data store: %s", stateFile)
 	}
 	defer s.Close()
 
 	// get current counter value
-	dataID := m[CounterKey]
+	dataID := m[KeyArg]
 	dataVal, err := s.Get(dataID)
 	if err != nil {
 		return nil, errors.Wrapf(err, "error getting data for: %s", dataID)
 	}
 
 	// parse input value
-	dataValStr := m[ValueKey]
+	dataValStr := m[ValueArg]
 	newVal, err := strconv.ParseInt(dataValStr, 10, 64)
 	if err != nil {
 		return nil, errors.Wrapf(err, "error parsing value: %s", dataValStr)
 	}
 
-	opStr := m[ActionKey]
+	opStr := m[OperationArg]
 	op := ParseOperation(opStr)
 	if op == OperationUndefined {
-		return nil, errors.Errorf("invalid action: %s", opStr)
+		return nil, errors.Errorf("invalid operation: %s", opStr)
 	}
 
 	switch op {
@@ -52,7 +52,7 @@ func Calculate(m map[string]string) (map[string]string, error) {
 	case OperationGet:
 	// do nothing
 	default:
-		return nil, errors.Errorf("invalid action: %s", op)
+		return nil, errors.Errorf("invalid operation: %s", op)
 	}
 
 	// save result
@@ -72,6 +72,6 @@ func Calculate(m map[string]string) (map[string]string, error) {
 	}
 
 	return map[string]string{
-		ResultKey: strconv.FormatInt(storedVal, 10),
+		ResultArg: strconv.FormatInt(storedVal, 10),
 	}, nil
 }
