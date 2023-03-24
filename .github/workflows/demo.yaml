@@ -10,7 +10,15 @@ permissions:
 
 jobs:
 
-  calculate:
+  build:
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+      packages: write
+    uses: ./.github/workflows/build.yaml
+
+  demo:
     runs-on: ubuntu-latest
     permissions:
       contents: write
