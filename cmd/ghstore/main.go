@@ -23,6 +23,7 @@ func main() {
 	input := calc.GetArgs()
 	for k := range input {
 		v := a.GetInput(k)
+		a.Debugf("input %s: %s", k, v)
 		if v == "" {
 			a.Fatalf("input %s is required", k)
 		}
@@ -35,6 +36,7 @@ func main() {
 	}
 
 	for k, v := range results {
+		a.Debugf("output %s: %s", k, v)
 		a.SetOutput(k, v)
 	}
 }
