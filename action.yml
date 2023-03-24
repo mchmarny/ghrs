@@ -18,8 +18,16 @@ inputs:
     description: 'Value for the action'
     required: false
     default: '0'
+  branch:
+    description: 'Name of the branch to use'
+    required: false
+    default: main
+  actor:
+    description: 'Name of the running actor'
+    required: false
+    default: 'github-actions[bot]'
 outputs:
-  result:
+  value:
     description: 'The result of the action'
 
 runs:

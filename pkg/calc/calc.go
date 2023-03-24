@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/mchmarny/ghstore/pkg/data"
+	"github.com/mchmarny/ghstore/pkg/git"
 	"github.com/pkg/errors"
 )
 
@@ -42,6 +43,25 @@ func Calculate(m map[string]string) (map[string]string, error) {
 		return nil, errors.Errorf("invalid operation: %s", opStr)
 	}
 
+	// handle control operations
+	if op == OperationSave {
+		branchVal := m[BranchArg]
+		if branchVal == "" {
+			return nil, errors.Errorf("branch is required for save operation")
+		}
+		actorVal := m[ActorArg]
+		if actorVal == "" {
+			return nil, errors.Errorf("actor is required for save operation")
+		}
+		if err := git.Save(branchVal, actorVal, stateFile); err != nil {
+			return nil, errors.Wrapf(err, "error saving state: %s", stateFile)
+		}
+		return map[string]string{
+			ResultArg: "saved",
+		}, nil
+	}
+
+	// handle data operations
 	switch op {
 	case OperationAdd:
 		dataVal += newVal

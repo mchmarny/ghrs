@@ -5,6 +5,8 @@ const (
 	KeyArg       = "key"
 	OperationArg = "operation"
 	ValueArg     = "value"
+	BranchArg    = "branch"
+	ActorArg     = "actor"
 
 	ResultArg = "value"
 )
@@ -15,5 +17,7 @@ func GetArgs() map[string]string {
 		KeyArg:       "counter",
 		OperationArg: "add",
 		ValueArg:     "0",
+		BranchArg:    "main",
+		ActorArg:     "github-actions",
 	}
 }

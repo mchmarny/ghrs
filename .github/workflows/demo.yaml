@@ -74,9 +74,18 @@ jobs:
         echo "Current value: ${{ steps.sub.outputs.value }}"
 
     - name: Save
-      run: |
-        git config --global user.name ${{ github.actor }}
-        git config --global user.email ${{ github.actor }}@users.noreply.github.com
-        git add ${{ inputs.data_file }}
-        git commit -am "save ${{ inputs.data_file }}"
-        git push origin main
+      uses: mchmarny/ghstore@main
+      with:
+        state: ${{ inputs.data_file }}
+        key: ${{ inputs.data_key }}
+        operation: save
+        branch: main
+        actor: ${{ github.actor }}
+
+# - name: Save
+#   run: |
+#     git config --global user.name ${{ github.actor }}
+#     git config --global user.email ${{ github.actor }}@users.noreply.github.com
+#     git add ${{ inputs.data_file }}
+#     git commit -am "save ${{ inputs.data_file }}"
+#     git push origin main
