@@ -1,9 +1,18 @@
 name: demo
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      data_file:
+        description: 'Path to data file (default: db/data.db)'
+        required: false
+        type: string
+        default: db/data.db
+      data_key:
+        description: 'Data key (default: calculator)'
+        required: false
+        type: string
+        default: calculator
 
 permissions:
   contents: read
@@ -24,9 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    env:
-      DATA_FILE: db/calc.db
-      DATE_KEY: calculator
     steps:
 
     - name: Checkout
@@ -36,8 +42,8 @@ jobs:
       id: get
       uses: mchmarny/ghstore@main
       with:
-        state: ${{ env.DATA_FILE }}  # will be created if doesn't exist
-        key: ${{ env.DATE_KEY }}
+        state: ${{ inputs.data_file }}  # will be created if doesn't exist
+        key: ${{ inputs.data_key }}
         operation: get
 
     - name: Print Get Output
@@ -48,8 +54,8 @@ jobs:
     - name: Add
       uses: mchmarny/ghstore@main
       with:
-        state: ${{ env.DATA_FILE }}
-        key: ${{ env.DATE_KEY }}
+        state: ${{ inputs.data_file }}
+        key: ${{ inputs.data_key }}
         operation: add
         value: '10'
 
@@ -57,8 +63,8 @@ jobs:
       id: sub
       uses: mchmarny/ghstore@main
       with:
-        state: ${{ env.DATA_FILE }}
-        key: ${{ env.DATE_KEY }}
+        state: ${{ inputs.data_file }}
+        key: ${{ inputs.data_key }}
         operation: sub
         value: '3'
 
