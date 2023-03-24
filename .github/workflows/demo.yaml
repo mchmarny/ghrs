@@ -13,6 +13,11 @@ on:
         required: false
         type: string
         default: calculator
+      rebuild:
+        description: 'Rebuild (default: false)'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -20,6 +25,7 @@ permissions:
 jobs:
 
   build:
+    if: ${{ github.event.inputs.rebuild == 'true' }}
     permissions:
       contents: read
       actions: read
@@ -72,15 +78,6 @@ jobs:
       run: |-
         set -euo pipefail
         echo "Current value: ${{ steps.sub.outputs.value }}"
-
-# - name: Save
-#   uses: mchmarny/ghstore@main
-#   with:
-#     state: ${{ inputs.data_file }}
-#     key: ${{ inputs.data_key }}
-#     operation: save
-#     branch: main
-#     actor: ${{ github.actor }}
 
     - name: Save
       run: |
