@@ -47,7 +47,7 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Checkout Code
-      uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3  # v3.5.0
+      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab  # v3.5.2
 
     - name: Tidy Modules
       run: |
@@ -86,7 +86,7 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Checkout Code
-      uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3  # v3.5.0
+      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab  # v3.5.2
 
     - name: Tidy Modules
       run: |
@@ -123,7 +123,7 @@ jobs:
     steps:
 
     - name: Checkout Code
-      uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3  # v3.5.0
+      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab  # v3.5.2
 
     - name: Scan Repo
       uses: aquasecurity/trivy-action@1f0aa582c8c8f5f7639610d6d38baddfea4fdcee  # master
